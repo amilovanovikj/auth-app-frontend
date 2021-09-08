@@ -30,7 +30,7 @@
               </form>
             </div>
             <footer class="card-footer buttons is-centered">
-              <button class="button is-primary is-fullwidth has-text-white has-background-primary-dark" @click="login()">
+              <button class="button is-primary is-fullwidth" @click="login()">
                 <span>log in</span>
               </button>
               <button class="button is-fullwidth" @click="register()">

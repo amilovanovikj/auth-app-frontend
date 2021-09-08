@@ -24,7 +24,7 @@
             </form>
           </div>
           <footer class="card-footer buttons is-centered">
-            <button class="button is-primary is-fullwidth has-text-white has-background-primary-dark" @click="register()">
+            <button class="button is-primary is-fullwidth" @click="register()">
               <span>register</span>
             </button>
             <div class="field">

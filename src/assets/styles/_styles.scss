@@ -298,6 +298,15 @@ p.comment {
   width: 100%;
 }
 
+.button.is-primary {
+  color: white !important;
+  background-color: $primary-dark !important;
+}
+
+.button.is-primary:active {
+  background-color: $primary !important;
+}
+
 html {
   overflow: scroll;
   overflow-x: hidden;

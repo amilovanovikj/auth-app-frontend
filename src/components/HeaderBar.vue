@@ -26,7 +26,6 @@ export default defineComponent({
   components: {},
   data() {
     return {
-      showMobileMenu: false,
       github: 'https://github.com/amilovanovikj/',
       linkedin: 'https://www.linkedin.com/in/andrej-milovanovikj/',
     }

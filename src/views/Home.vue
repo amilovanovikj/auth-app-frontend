@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <section class="hero is-fullheight-with-navbar is-info background-wrap">
+    <Bubbles />
+    <div class="hero-body">
+      <div class="container auth-container has-text-centered">
+        <p class="title">welcome</p>
+        <p class="subtitle">you have successfully logged in!</p>
+        <button
+          class="button is-dark is-fullwidth has-text-white"
+          @click="logout()"
+        >
+          <span>log out</span>
+        </button>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import Bubbles from "../components/Bubbles.vue"
 
 export default defineComponent({
   name: "Home",
-  components: {
-    HelloWorld,
+  components: { Bubbles },
+  methods: {
+    logout() {
+      this.$router.push({ name: "Login" });
+    },
   },
 });
 </script>

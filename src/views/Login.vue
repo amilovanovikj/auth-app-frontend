@@ -25,7 +25,10 @@
                 </div>
                 <div class="field">
                   <label class="label" for="password">password</label>
-                  <input class="input" name="password" type="password" autocomplete="current-password" v-model="user.password"/>
+                  <input class="input" name="password" type="password" autocomplete="current-password"
+                    v-model="user.password"
+                    @keydown.enter="login()"
+                  />
                 </div>
               </form>
             </div>

@@ -3,7 +3,7 @@ html > body {
 }
 
 .auth-container {
-  max-width: 400px !important;
+  max-width: 375px !important;
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
 }
@@ -178,6 +178,7 @@ ul.list {
   box-shadow: none;
 }
 div.card-content {
+  padding: 1rem !important;
   background-color: $shade-light;
   .name {
     font-size: 28px;
@@ -236,6 +237,10 @@ p.card-header-title, p.modal-card-title {
   color: #fff;
   display: block;
   text-align: center;
+}
+
+.box {
+  padding: 1rem !important;
 }
 
 .field {

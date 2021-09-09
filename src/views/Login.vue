@@ -13,7 +13,7 @@
       </section>
       <div class="column login-section">
         <div class="container auth-container">
-          <div class="card box">
+          <div class="card box has-background-white-bis">
             <header class="card-header">
               <p class="card-header-title">login</p>
             </header>

@@ -1,6 +1,8 @@
 <template>
-  <section class="hero is-fullheight-with-navbar is-dark background-wrap">
-    <Bubbles />
+  <section class="hero is-fullheight-with-navbar is-dark">
+    <div class="background-wrap">
+      <Bubbles />
+    </div>
     <div class="hero-body">
       <div class="container auth-container">
         <div class="card box has-background-white-bis">

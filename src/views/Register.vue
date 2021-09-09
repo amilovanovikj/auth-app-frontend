@@ -11,18 +11,9 @@
           </header>
           <div class="card-content">
             <form class="content">
-              <div class="field">
-                <label class="label" for="email">email</label>
-                <input class="input" name="email" autocomplete="email" v-model="user.email"/>
-              </div>
-              <div class="field">
-                <label class="label" for="password">password</label>
-                <input class="input" name="password" type="password" autocomplete="new-password" v-model="user.password"/>
-              </div>
-              <div class="field">
-                <label class="label" for="retype-password">retype password</label>
-                <input class="input" name="retype-password" type="password" autocomplete="new-password" v-model="retypePassword"/>
-              </div>
+              <EmailField @setEmail="setEmail"/>
+              <PasswordField @setPassword="setPassword" />
+              <RetypePasswordField :password="user.password" />
             </form>
           </div>
           <footer class="card-footer buttons is-centered">
@@ -42,31 +33,42 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
-import Bubbles from "../components/Bubbles.vue"
+import Bubbles from "../components/Bubbles.vue";
+import EmailField from "@/components/EmailField.vue";
+import PasswordField from "@/components/PasswordField.vue";
+import RetypePasswordField from "@/components/RetypePasswordField.vue";
 
 export default defineComponent({
   name: "Register",
   components: {
     Bubbles,
+    EmailField,
+    PasswordField,
+    RetypePasswordField,
   },
   data () {
     return {
       user: {
-        email: '',
-        password: ''
+        email: String(),
+        password: String(),
       },
-      retypePassword: ''
     }
   },
   methods: {
     register() {
-      this.$router.push({ name: 'Home' })
+      this.$router.push({ name: 'Home' });
     },
     login() {
-      this.$router.push({ name: 'Login' })
-    }
+      this.$router.push({ name: 'Login' });
+    },
+    setEmail(email: string) {
+      this.user.email = email;
+    },
+    setPassword(password: string) {
+      this.user.password = password;
+    },
   }
 });
 </script>

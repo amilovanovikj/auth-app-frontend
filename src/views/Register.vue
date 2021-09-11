@@ -23,7 +23,7 @@
             <div class="field">
               <p>already have an account?</p>
               <div class="has-text-centered">
-                <span id="sign-in-link" @click="login()">log in</span>
+                <button class="link" @click="login()">log in</button>
               </div>
             </div>
           </footer>

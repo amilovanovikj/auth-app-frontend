@@ -1,6 +1,8 @@
 <template>
-  <section class="hero is-fullheight-with-navbar is-info background-wrap">
-    <Bubbles />
+  <section class="hero is-fullheight-with-navbar is-info">
+    <div class="background-wrap">
+      <Bubbles />
+    </div>
     <div class="hero-body">
       <div class="container auth-container has-text-centered">
         <p class="title">welcome</p>

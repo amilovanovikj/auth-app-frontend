@@ -21,11 +21,12 @@
               <form class="content">
                 <div class="field">
                   <label class="label" for="email">email</label>
-                  <input class="input" name="email" autocomplete="email" v-model="user.email"/>
+                  <input class="input" name="email" autocomplete="email" placeholder="email" v-model="user.email"/>
                 </div>
                 <div class="field">
                   <label class="label" for="password">password</label>
-                  <input class="input" name="password" type="password" autocomplete="current-password"
+                  <input class="input" name="password" type="password" placeholder="password"
+                    autocomplete="current-password"
                     v-model="user.password"
                     @keydown.enter="login()"
                   />

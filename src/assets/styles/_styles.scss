@@ -71,10 +71,6 @@ div.card-content {
   background-color: $shade-light;
 }
 
-.card {
-  margin-bottom: 2em;
-}
-
 label.label {
   font-weight: normal;
 }
@@ -153,6 +149,10 @@ button.link {
 
 .column {
   padding: 0 !important;
+}
+
+.column.hero {
+  align-self: stretch !important;
 }
 
 .navbar-brand {

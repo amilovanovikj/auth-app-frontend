@@ -1,14 +1,13 @@
 <template>
   <div class="hero is-fullheight-with-navbar">
     <div class="columns is-vcentered">
-      <section class="column is-7">
-        <div class="hero is-fullheight-with-navbar is-dark">
-          <div class="hero-body">
-            <div>
-              <p class="title">authentication app</p>
-              <p class="subtitle">a basic Node.js+GraphQL and Vue3 app with user register, login and logout functionalities.</p>
-            </div>
+      <section class="column is-7 hero is-fullheight-with-navbar is-dark">
+        <div class="hero-body">
+          <div>
+            <p class="title">authentication app</p>
+            <p class="subtitle">a basic Node.js+GraphQL and Vue3 app with user register, login and logout functionalities.</p>
           </div>
+        </div>
         </div>
       </section>
       <div class="column login-section">

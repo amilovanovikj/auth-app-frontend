@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { createClient, provideClient, dedupExchange, fetchExchange } from '@urql/vue';
-import { Cache, cacheExchange, query, QueryInput } from '@urql/exchange-graphcache';
+import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache';
 import HeaderBar from "./components/HeaderBar.vue";
 import { LoginMutation, LogoutMutation, MeDocument, MeQuery, RegisterMutation } from './generated/graphql';
 
@@ -29,7 +29,7 @@ export default {
   components: { HeaderBar },
   setup () {
     const client = createClient({
-      url: process.env.BACKEND_URL,
+      url: process.env.VUE_APP_BACKEND_URL,
       fetchOptions: {
         credentials: "include"
       },

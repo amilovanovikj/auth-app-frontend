@@ -106,6 +106,10 @@ p.card-header-title, p.modal-card-title {
   margin-bottom: 0.5rem !important;
 }
 
+.home-container {
+  max-width: 400px !important;
+}
+
 .buttons i.fab {
   margin-left: 0px !important;
   margin-right: 20px !important;
@@ -171,6 +175,12 @@ button.link {
 
 .button.is-primary:active {
   background-color: $primary !important;
+}
+
+.notification > .delete {
+  right: 1rem !important;
+  position: absolute;
+  top: auto !important;
 }
 
 html {

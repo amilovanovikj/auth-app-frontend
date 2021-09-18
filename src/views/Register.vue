@@ -11,14 +11,16 @@
           </header>
           <div class="card-content">
             <form class="content">
-              <EmailField @setEmail="setEmail"/>
-              <PasswordField @setPassword="setPassword" />
-              <RetypePasswordField :password="user.password" />
+              <EmailField ref="emailRef" @setEmail="setEmail"/>
+              <PasswordField ref="passwordRef" @setPassword="setPassword" />
+              <RetypePasswordField ref="retypePasswordRef" :password="user.password" />
             </form>
           </div>
           <footer class="card-footer buttons is-centered">
-            <button class="button is-primary is-fullwidth" @click="register()">
-              <span>register</span>
+            <button type="submit" class="button is-primary is-fullwidth"
+              @click.prevent="register()"
+              :class="{ 'is-loading': isSubmitting }">
+              register
             </button>
             <div class="field">
               <p>already have an account?</p>
@@ -34,7 +36,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import { useRegisterMutation } from "@/generated/graphql";
 import Bubbles from "../components/Bubbles.vue";
 import EmailField from "@/components/EmailField.vue";
 import PasswordField from "@/components/PasswordField.vue";
@@ -48,17 +51,50 @@ export default defineComponent({
     PasswordField,
     RetypePasswordField,
   },
+  setup () {
+    const registerMutation = useRegisterMutation();
+    const emailRef = ref<InstanceType<typeof EmailField>>();
+    const passwordRef = ref<InstanceType<typeof PasswordField>>();
+    const retypePasswordRef = ref<InstanceType<typeof RetypePasswordField>>();
+    
+    return {
+      registerMutation,
+      emailRef,
+      passwordRef,
+      retypePasswordRef,
+    }
+  },
   data () {
     return {
       user: {
         email: String(),
         password: String(),
       },
+      isSubmitting: false,
     }
   },
   methods: {
     register() {
-      this.$router.push({ name: 'Home' });
+      this.isSubmitting = true;
+      const credentials = {
+        email: this.user.email,
+        password: this.user.password
+      }
+      if (this.retypePasswordRef?.validateRetypePassword()) {
+        this.registerMutation.executeMutation({ options: credentials }).then(res => {
+          if (res.data?.register.errors) {
+            res.data.register.errors.forEach(err => {
+              console.error('ERROR\nfield: ', err.field, '\nmessage: ', err.message);
+            });
+            this.emailRef?.validateEmail();
+            this.passwordRef?.validatePassword();
+          } else if (res.data?.register.user) {
+          localStorage.setItem('user', res.data.register.user.email)
+            this.$router.push({ name: 'Home' });
+          }
+        });
+      }
+      this.isSubmitting = false;
     },
     login() {
       this.$router.push({ name: 'Login' });

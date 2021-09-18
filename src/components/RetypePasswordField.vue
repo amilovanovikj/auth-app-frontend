@@ -36,6 +36,7 @@ export default defineComponent({
   methods: {
     validateRetypePassword() {
       this.isRetypePasswordInvalid = !(this.password === this.retypePassword)
+      return !this.isRetypePasswordInvalid
     }
   },
 })

@@ -4,7 +4,7 @@ import NotFound from "../views/NotFound.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/login",
+    redirect: "/home",
   },
   {
     path: "/login",
@@ -23,6 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "Home",
     component: () =>
       import(/* webpackChunkName: "bundle-home" */ "../views/Home.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/:pathMatch(.*)*",
@@ -35,5 +36,13 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !localStorage.getItem('user')) {    
+    next({
+      name: "Login"
+    })
+  } else next();
+})
 
 export default router;

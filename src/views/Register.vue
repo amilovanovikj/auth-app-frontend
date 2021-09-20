@@ -5,6 +5,10 @@
     </div>
     <div class="hero-body">
       <div class="container auth-container">
+        <div class="notification is-danger is-light" v-show="errorMessage">
+          {{ errorMessage }}
+          <button class="delete" @click="errorMessage = String()"></button>
+        </div>
         <div class="card box has-background-white-bis">
           <header class="card-header">
             <p class="card-header-title">register</p>
@@ -71,6 +75,7 @@ export default defineComponent({
         password: String(),
       },
       isSubmitting: false,
+      errorMessage: String(),
     }
   },
   methods: {
@@ -88,11 +93,15 @@ export default defineComponent({
             });
             this.emailRef?.validateEmail();
             this.passwordRef?.validatePassword();
+            this.errorMessage = "the form has invalid fields"
           } else if (res.data?.register.user) {
           localStorage.setItem('user', res.data.register.user.email)
             this.$router.push({ name: 'Home' });
           }
         });
+      }
+      else {
+        this.errorMessage = "the form has invalid fields"
       }
       this.isSubmitting = false;
     },

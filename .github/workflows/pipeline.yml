@@ -33,9 +33,15 @@ jobs:
     - name: Docker push
       run: |
         docker push ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
+    - name: 'Az login'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.APP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         images: '${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}'
+    - name: Az logout
+      run: |
+        az logout

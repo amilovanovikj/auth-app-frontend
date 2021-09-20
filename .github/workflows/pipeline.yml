@@ -15,18 +15,18 @@ jobs:
     steps:
     - name: Git checkout
       uses: actions/checkout@v2
-    - name: Docker login
-      uses: azure/docker-login@v1
-      with:
-        login-server: ${{ secrets.REGISTRY_SERVER }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: Create .env file
       run: |
         cat << EOF >> .env
         NODE_ENV = development
         VUE_APP_BACKEND_URL = ${{ secrets.BACKEND_URL }}
         EOF
+    - name: Docker login
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: Docker build
       run: |
         docker build -t ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }} .

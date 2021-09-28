@@ -30,12 +30,12 @@ jobs:
     - name: Docker build
       run: |
         docker build -t ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }} .
-        docker tag ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }} ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:latest
+        docker tag ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }} ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:dev-latest
     - name: Docker push
       run: |
         docker push ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:latest
-    - name: 'Az login'
+        docker push ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:dev-latest
+    - name: Az login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}

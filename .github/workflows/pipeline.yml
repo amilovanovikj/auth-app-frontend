@@ -6,6 +6,7 @@ on:
 env:
   APP_NAME: auth-app-frontend
   AZURE_WEBAPP_NAME: azwe-frontend-d01-auth
+  NODE_VERSION: '16.x'
 
 jobs:
   build-and-deploy:
@@ -15,6 +16,19 @@ jobs:
     steps:
     - name: Git checkout
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: Install Vue
+      run: |
+        yarn add @vue/cli@latest
+        yarn add nyc
+    - name: Run tests
+      run: |
+        yarn run test:unit
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       env:

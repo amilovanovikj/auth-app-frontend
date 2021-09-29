@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - feature/*
+    - feature/ci-cd
 
 env:
   APP_NAME: auth-app-frontend

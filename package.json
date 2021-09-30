@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "nyc --reporter=lcov --reporter=text vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "gen": "graphql-codegen --require dotenv/config --config codegen.yml"
@@ -19,7 +19,6 @@
     "bulma": "^0.9.3",
     "core-js": "^3.6.5",
     "graphql": "^15.5.3",
-    "nyc": "^15.1.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"

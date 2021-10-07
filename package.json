@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e": "vue-cli-service test:e2e --config video=false --headless",
     "lint": "vue-cli-service lint",
     "gen": "graphql-codegen --require dotenv/config --config codegen.yml"
   },

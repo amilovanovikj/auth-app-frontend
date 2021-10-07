@@ -1,30 +1,13 @@
 import { expect } from "chai";
 import { shallowMount } from "@vue/test-utils";
-import RetypePasswordField from "@/components/RetypePasswordField.vue";
-import EmailField from "@/components/EmailField.vue";
+import HelloWorld from "@/components/HelloWorld.vue";
 
-describe("RetypePasswordField.vue", () => {
-  it("renders message when isRetypePasswordInvalid is true", () => {
-    const wrapper = shallowMount(RetypePasswordField, {
-      data () {
-        return {
-          isRetypePasswordInvalid: true
-        }
-      }
+describe("HelloWorld.vue", () => {
+  it("renders props.msg when passed", () => {
+    const msg = "new message";
+    const wrapper = shallowMount(HelloWorld, {
+      props: { msg },
     });
-    expect(wrapper.text()).to.include("passwords must match");
-  });
-});
-
-describe("EmailField.vue", () => {
-  it("renders message when isEmailInvalid is true", () => {
-    const wrapper = shallowMount(EmailField, {
-      data () {
-        return {
-          isEmailInvalid: true
-        }
-      }
-    });
-    expect(wrapper.text()).to.include("please specify a valid email address");
+    expect(wrapper.text()).to.include(msg);
   });
 });

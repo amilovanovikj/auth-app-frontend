@@ -3,7 +3,7 @@
     <nav class="navbar has-background-primary-dark">
       <div class="navbar-brand">
         <div class="navbar-item nav-home">
-          <button class="link" @click="home()"><span class="is-primary logo-text">auth app</span></button>
+          <a href="/"><span class="is-primary logo-text">auth app</span></a>
         </div>
         <div class="buttons">
           <a :href="github" target="_blank" rel="noopener noreferrer">
@@ -30,10 +30,5 @@ export default defineComponent({
       linkedin: 'https://www.linkedin.com/in/andrej-milovanovikj/',
     }
   },
-  methods: {
-    home () {
-      this.$router.push({ name: 'Home' })
-    }
-  }
 });
 </script>

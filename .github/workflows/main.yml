@@ -26,11 +26,6 @@ jobs:
       run: yarn install --frozen-lockfile
     - name: Run unit tests
       run: yarn test:unit
-<<<<<<< HEAD
-=======
-    - name: Run integration tests
-      run: yarn test:e2e
->>>>>>> develop
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       env:

@@ -49,11 +49,18 @@ jobs:
     - name: Add runner IP to ACR firewall
       run: |
         az acr network-rule add -n ${{ secrets.REGISTRY_SERVER }} -g ${{ secrets.REGISTRY_RESOURCE_GROUP }} --ip-address ${{ steps.ip.outputs.ipv4 }} > /dev/null
+    - name: Get key vault secrets
+      uses: azure/get-keyvault-secrets@v1
+      with:
+        keyvault: ${{ secrets.KEY_VAULT_NAME }}
+        secrets: 'server-url, appinsights-connection-string'
+      id: kv
     - name: Create .env file
       run: |
         cat << EOF >> .env
         NODE_ENV = production
-        VUE_APP_BACKEND_URL = ${{ secrets.BACKEND_URL }}
+        VUE_APP_BACKEND_URL = ${{ steps.kv.outputs.server-url }}
+        VUE_APP_INSIGHTS_CONNECTION_STRING = ${{ steps.kv.outputs.appinsights-connection-string }}
         EOF
     - name: Docker login
       uses: azure/docker-login@v1

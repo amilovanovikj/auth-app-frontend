@@ -5,7 +5,9 @@ import store from "./store";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 
 const appInsights = new ApplicationInsights({
-  config: {}
+  config: {
+    connectionString: process.env.VUE_APP_INSIGHTS_CONNECTION_STRING
+  }
 });
 appInsights.loadAppInsights();
 appInsights.trackPageView();

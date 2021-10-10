@@ -6,7 +6,11 @@ import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 
 const appInsights = new ApplicationInsights({
   config: {
-    connectionString: process.env.VUE_APP_INSIGHTS_CONNECTION_STRING
+    connectionString: process.env.VUE_APP_INSIGHTS_CONNECTION_STRING,
+    disableFetchTracking: false,
+    enableCorsCorrelation: true,
+    enableRequestHeaderTracking: true,
+    enableResponseHeaderTracking: true,
   }
 });
 appInsights.loadAppInsights();

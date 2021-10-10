@@ -30,7 +30,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     - name: Docker build
       run: docker build -t auth-app-frontend:snyk .
-    - name: Run Snyk
+    - name: Run Snyk scan
       continue-on-error: true
       uses: snyk/actions/docker@master
       env:
@@ -38,7 +38,7 @@ jobs:
       with:
         image: auth-app-frontend:snyk
         args: --file=Dockerfile
-    - name: Upload results to GitHub
+    - name: Upload Snyk results to GitHub
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: snyk.sarif

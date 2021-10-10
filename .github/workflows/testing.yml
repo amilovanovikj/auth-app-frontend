@@ -53,6 +53,7 @@ jobs:
       run: |
         az acr network-rule add -n ${{ secrets.REGISTRY_SERVER }} -g ${{ secrets.REGISTRY_RESOURCE_GROUP }} --ip-address ${{ steps.ip.outputs.ipv4 }} > /dev/null
         az keyvault network-rule add -n ${{ secrets.KEY_VAULT_NAME }} -g ${{ env.RESOURCE_GROUP_NAME }} --ip-address ${{ steps.ip.outputs.ipv4 }} > /dev/null
+        sleep 10s
     - name: Get key vault secrets
       uses: azure/get-keyvault-secrets@v1
       with:

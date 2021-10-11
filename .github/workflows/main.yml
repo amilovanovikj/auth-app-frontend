@@ -4,6 +4,7 @@ on:
     - main
 
 env:
+  RESOURCE_GROUP_NAME: auth-prod-01-rg
   APP_NAME: auth-app-frontend
   AZURE_WEBAPP_NAME: azwe-frontend-p01-auth
   ENV_TYPE: prod
@@ -46,14 +47,23 @@ jobs:
     - name: Get runner public IP
       id: ip
       uses: haythem/public-ip@v1.2
-    - name: Add runner IP to ACR firewall
+    - name: Add runner IP to firewall
       run: |
         az acr network-rule add -n ${{ secrets.REGISTRY_SERVER }} -g ${{ secrets.REGISTRY_RESOURCE_GROUP }} --ip-address ${{ steps.ip.outputs.ipv4 }} > /dev/null
+        az keyvault network-rule add -n ${{ secrets.KEY_VAULT_NAME }} -g ${{ env.RESOURCE_GROUP_NAME }} --ip-address ${{ steps.ip.outputs.ipv4 }} > /dev/null
+        sleep 10s
+    - name: Get key vault secrets
+      uses: azure/get-keyvault-secrets@v1
+      with:
+        keyvault: ${{ secrets.KEY_VAULT_NAME }}
+        secrets: 'server-url, appinsights-connection-string'
+      id: kv
     - name: Create .env file
       run: |
         cat << EOF >> .env
         NODE_ENV = production
-        VUE_APP_BACKEND_URL = ${{ secrets.BACKEND_URL }}
+        VUE_APP_BACKEND_URL = ${{ steps.kv.outputs.server-url }}
+        VUE_APP_INSIGHTS_CONNECTION_STRING = ${{ steps.kv.outputs.appinsights-connection-string }}
         EOF
     - name: Docker login
       uses: azure/docker-login@v1
@@ -65,6 +75,17 @@ jobs:
       run: |
         docker build -t ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }} .
         docker tag ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }} ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ env.ENV_TYPE }}-latest
+    - name: Run Snyk scan
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
+        args: --file=Dockerfile
+    - name: Upload Snyk results to GitHub
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: snyk.sarif
     - name: Docker push
       run: |
         docker push ${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
@@ -74,10 +95,11 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         images: '${{ secrets.REGISTRY_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}'
-    - name: Remove runner IP from ACR firewall
+    - name: Remove runner IP from firewall
       if: always()
       run: |
         az acr network-rule remove -n ${{ secrets.REGISTRY_SERVER }} -g ${{ secrets.REGISTRY_RESOURCE_GROUP }} --ip-address ${{ steps.ip.outputs.ipv4 }} > /dev/null
+        az keyvault network-rule remove -n ${{ secrets.KEY_VAULT_NAME }} -g ${{ env.RESOURCE_GROUP_NAME }} --ip-address ${{ steps.ip.outputs.ipv4 }}/32 > /dev/null
     - name: Az logout
       if: always()
       run: |

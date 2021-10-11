@@ -11,8 +11,8 @@ env:
   NODE_VERSION: '16.x'
 
 jobs:
-  test:
-    name: Test
+  scan:
+    name: Scan
     runs-on: ubuntu-latest
     steps:
     - name: Git checkout
@@ -35,6 +35,7 @@ jobs:
 
   build-and-deploy:
     name: Build and Deploy
+    needs: scan
     runs-on: ubuntu-latest
     environment: production
     steps:

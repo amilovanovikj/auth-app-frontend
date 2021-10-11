@@ -37,6 +37,7 @@ jobs:
 
   build-and-deploy:
     name: Build and Deploy
+    needs: test
     runs-on: ubuntu-latest
     environment: testing
     steps:

@@ -9,7 +9,7 @@ COPY . ./
 RUN yarn build --prod
 
 # Package stage
-FROM nginx:alpine as package
+FROM nginx:1.22.0-alpine as package
 COPY --from=build /home/auth-app-frontend/dist /usr/share/nginx/html
 COPY --from=build /home/auth-app-frontend/nginx.conf /etc/nginx/nginx.conf
 
